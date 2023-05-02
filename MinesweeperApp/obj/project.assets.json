@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\icek0\\source\\repos\\MinesweeperApp\\MinesweeperApp\\MinesweeperApp.csproj",
+      "projectUniqueName": "C:\\Users\\icek0\\Documents\\GitHub\\MinesweeperApp\\MinesweeperApp\\MinesweeperApp.csproj",
       "projectName": "MinesweeperApp",
-      "projectPath": "C:\\Users\\icek0\\source\\repos\\MinesweeperApp\\MinesweeperApp\\MinesweeperApp.csproj",
+      "projectPath": "C:\\Users\\icek0\\Documents\\GitHub\\MinesweeperApp\\MinesweeperApp\\MinesweeperApp.csproj",
       "packagesPath": "C:\\Users\\icek0\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\icek0\\source\\repos\\MinesweeperApp\\MinesweeperApp\\obj\\",
+      "outputPath": "C:\\Users\\icek0\\Documents\\GitHub\\MinesweeperApp\\MinesweeperApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

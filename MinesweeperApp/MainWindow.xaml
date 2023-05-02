@@ -1,12 +1,17 @@
-﻿<Window x:Name="Main" x:Class="MinesweeperApp.MainWindow"
+﻿<Window x:Name="main" x:Class="MinesweeperApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MinesweeperApp"
         mc:Ignorable="d"
-        Title="Minesweeper" Height="600" Width="450">
+        Title="Minesweeper" Height="600" Width="450" ResizeMode="NoResize">
     <Grid>
-
+        <Button x:Name="restartBtn" Content=":)" HorizontalAlignment="Center" Margin="0,15,0,0" VerticalAlignment="Top" Height="50" Width="50" FontSize="24" Click="restartBtn_Click"/>
+        
+        
+        <Grid x:Name="minefield" Margin="8,80,8,8">
+            
+        </Grid>
     </Grid>
 </Window>
