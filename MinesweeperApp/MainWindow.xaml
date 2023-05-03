@@ -6,15 +6,14 @@
         xmlns:local="clr-namespace:MinesweeperApp"
         mc:Ignorable="d"
         Title="Minesweeper" Height="600" Width="450" ResizeMode="NoResize">
-
     <Grid>
-
-
         <Button x:Name="restartBtn" Content=":)" HorizontalAlignment="Center" Margin="0,15,0,0" VerticalAlignment="Top" Height="50" Width="50" FontSize="24" Click="restartBtn_Click"/>
-        
-        
+        <Label x:Name="flagCounterDisplay" Content="000" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" Height="50" Width="84" FontSize="36" Padding="5,0,5,0"/>
+        <Label x:Name="timeCounterDisplay" Content="000" HorizontalAlignment="Right" Margin="0,15,10,0" VerticalAlignment="Top" Height="50" Width="84" FontSize="36" FlowDirection="RightToLeft" Padding="5,0,5,0"/>
+
         <Grid x:Name="minefield" Margin="8,80,8,8" >
-            
+
         </Grid>
+
     </Grid>
 </Window>
