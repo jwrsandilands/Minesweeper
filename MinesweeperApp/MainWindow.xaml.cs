@@ -35,7 +35,7 @@ namespace MinesweeperApp
             //make window adjust to whatever size necessary
             main.SizeToContent = SizeToContent.WidthAndHeight;
 
-            createGrid(50, 30);
+            createGrid();
         }
 
         public void createGrid(int xSize = 8, int ySize = 8)
@@ -176,7 +176,6 @@ namespace MinesweeperApp
                 if (numBombs != 0) { btn.Content = numBombs; }
             }
 
-
             //This tile has no nearby bombs. Reveal adjacent tiles
             if(numBombs == 0)
             {
@@ -194,30 +193,62 @@ namespace MinesweeperApp
                         //if the button selected is found in the array
                         if (btn == buttons[Xcount, Ycount])
                         {
+                            //If the button isnt agaist the wall or a disabled button (NORTHWEST)
+                            if (btn != buttons[0, Ycount] && btn != buttons[Xcount, 0] && buttons[Xcount - 1, Ycount -1].IsEnabled )
+                            {
+                                //Activate the tile to the West
+                                tileActivated(buttons[Xcount - 1, Ycount - 1]);
+                            }
+
                             //If the button isnt agaist the wall or a disabled button (NORTH)
-                            if(btn != buttons[Xcount, 0] && buttons[Xcount, Ycount - 1].IsEnabled)
+                            if (btn != buttons[Xcount, 0] && buttons[Xcount, Ycount - 1].IsEnabled)
                             {
                                 //Activate the tile to the North
                                 tileActivated(buttons[Xcount, Ycount - 1]);
                             }
-                            //If the button isnt agaist the wall or a disabled button (SOUTH)
-                            if (btn != buttons[Xcount, buttons.GetLength(1) - 1] && buttons[Xcount, Ycount + 1].IsEnabled)
+
+                            //If the button isnt agaist the wall or a disabled button (NORTHEAST)
+                            if (btn != buttons[Xcount, 0] && btn != buttons[buttons.GetLength(0) - 1, Ycount] && buttons[Xcount + 1, Ycount - 1].IsEnabled)
                             {
-                                //activate the tile to the south
-                                tileActivated(buttons[Xcount, Ycount + 1]);
+                                //Activate the tile to the North
+                                tileActivated(buttons[Xcount + 1, Ycount - 1]);
                             }
+
                             //If the button isnt agaist the wall or a disabled button (WEST)
                             if (btn != buttons[0, Ycount] && buttons[Xcount - 1, Ycount].IsEnabled)
                             {
                                 //Activate the tile to the West
                                 tileActivated(buttons[Xcount - 1, Ycount]);
                             }
+
                             //If the button isnt agaist the wall or a disabled button (EAST)
                             if (btn != buttons[buttons.GetLength(0) -1, Ycount] && buttons[Xcount + 1, Ycount].IsEnabled)
                             {
                                 //Activate the tile to the east
                                 tileActivated(buttons[Xcount + 1, Ycount]);
                             }
+
+                            //If the button isnt agaist the wall or a disabled button (SOUTHWEST)
+                            if (btn != buttons[Xcount, buttons.GetLength(1) - 1] && btn != buttons[0, Ycount] && buttons[Xcount - 1, Ycount + 1].IsEnabled)
+                            {
+                                //activate the tile to the south
+                                tileActivated(buttons[Xcount - 1, Ycount + 1]);
+                            }
+
+                            //If the button isnt agaist the wall or a disabled button (SOUTH)
+                            if (btn != buttons[Xcount, buttons.GetLength(1) - 1] && buttons[Xcount, Ycount + 1].IsEnabled)
+                            {
+                                //activate the tile to the south
+                                tileActivated(buttons[Xcount, Ycount + 1]);
+                            }
+
+                            //If the button isnt agaist the wall or a disabled button (SOUTHEAST)
+                            if (btn != buttons[Xcount, buttons.GetLength(1) - 1] && btn != buttons[buttons.GetLength(0) - 1, Ycount] && buttons[Xcount + 1, Ycount + 1].IsEnabled)
+                            {
+                                //activate the tile to the south
+                                tileActivated(buttons[Xcount + 1, Ycount + 1]);
+                            }
+
                             break;
                         }
                         Ycount++;
@@ -244,9 +275,13 @@ namespace MinesweeperApp
         void flagPlaced(object sender, EventArgs e)
         {
             Button btn = sender as Button;
-            if (btn.Content != "1>")
+            if (btn.Content != "1>" && btn.Content != "?")
             {
                 btn.Content = "1>";
+            }
+            else if(btn.Content == "1>")
+            {
+                btn.Content = "?";
             }
             else
             {
