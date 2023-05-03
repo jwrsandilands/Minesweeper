@@ -6,11 +6,14 @@
         xmlns:local="clr-namespace:MinesweeperApp"
         mc:Ignorable="d"
         Title="Minesweeper" Height="600" Width="450" ResizeMode="NoResize">
+
     <Grid>
+
+
         <Button x:Name="restartBtn" Content=":)" HorizontalAlignment="Center" Margin="0,15,0,0" VerticalAlignment="Top" Height="50" Width="50" FontSize="24" Click="restartBtn_Click"/>
         
         
-        <Grid x:Name="minefield" Margin="8,80,8,8">
+        <Grid x:Name="minefield" Margin="8,80,8,8" >
             
         </Grid>
     </Grid>

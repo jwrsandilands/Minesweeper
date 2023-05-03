@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Diagnostics.PerformanceData;
 using System.Diagnostics.Tracing;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace MinesweeperApp
             createGrid();
         }
 
-        public void createGrid(int xSize = 8, int ySize = 8)
+        public void createGrid(int xSize = 9, int ySize = 9)
         {
             //create grid's size counters
             int xSizeCount = 0, ySizeCount = 0;
@@ -46,7 +47,7 @@ namespace MinesweeperApp
             minefield.HorizontalAlignment = HorizontalAlignment.Center;
 
             //Create the minefield
-            positionMines(40, xSize, ySize);
+            positionMines(10, xSize, ySize);
 
             //Define the Columns
             while (xSizeCount < xSize)
@@ -84,6 +85,7 @@ namespace MinesweeperApp
                     {
                         if (Xcount == bomb.X && Ycount == bomb.Y)
                         {
+                            /*btn.Template = disabledButtonTemplate;*/
                             btn.PreviewMouseLeftButtonUp -= mouseUp;
                             btn.PreviewMouseLeftButtonUp += new MouseButtonEventHandler(bombClicked);
                             //btn.Content = "B";
@@ -114,7 +116,7 @@ namespace MinesweeperApp
         }
 
         //set up the mines!
-        public void positionMines(int mines = 10, int XSize = 8, int YSize = 8)
+        public void positionMines(int mines = 10, int XSize = 9, int YSize = 9)
         {
             bombs = new Bomb[0];
             int mineCount = 0;
@@ -290,12 +292,47 @@ namespace MinesweeperApp
         //You clicked a bomb!
         void bombClicked(object sender, EventArgs e)
         {
+            //set button to show bomb is tile not flagged
             Button btn = sender as Button;
             if(btn.Content != "1>")
             {
                 faceState = 2;
+                btn.FontSize = 20;
+                btn.FontWeight = FontWeights.Bold;
                 btn.Content = "*";
-                btn.IsEnabled = false;
+                btn.Foreground = Brushes.Black;
+                btn.Background = Brushes.Red;
+
+                //Locate the activated button!
+                //Along the corridor...
+                int Xcount = 0;
+
+                while (Xcount < buttons.GetLength(0))
+                {
+                    //Up the stairs...
+                    int Ycount = 0;
+
+                    while (Ycount < buttons.GetLength(1))
+                    {
+                        buttons[Xcount, Ycount].PreviewMouseLeftButtonDown -= mouseDown;
+                        buttons[Xcount,Ycount].PreviewMouseLeftButtonUp -= bombClicked;
+                        buttons[Xcount, Ycount].PreviewMouseLeftButtonUp -= mouseUp;
+                        buttons[Xcount, Ycount].MouseRightButtonDown -= flagPlaced;
+
+                        if (bombs.Any(bomb => bomb.X == Xcount && bomb.Y == Ycount) && btn != buttons[Xcount, Ycount])
+                        {
+                            buttons[Xcount, Ycount].FontSize = 20;
+                            buttons[Xcount, Ycount].FontWeight = FontWeights.Bold;
+                            buttons[Xcount, Ycount].Content = "*";
+                            buttons[Xcount, Ycount].Foreground = Brushes.Black;
+                            buttons[Xcount, Ycount].IsEnabled = false;
+                        }
+
+                        Ycount++;
+                    }
+                    Xcount++;
+                }
+
             }
         }
 
@@ -321,26 +358,28 @@ namespace MinesweeperApp
         //When the reset button is clicked...
         private void restartBtn_Click(object sender, RoutedEventArgs e)
         {
+            GridLength space = new GridLength(24, GridUnitType.Pixel);
+
             int Xcount = 0;
 
             while (Xcount < buttons.GetLength(0))
             {
                 //Up the stairs...
                 int Ycount = 0;
-
                 while (Ycount < buttons.GetLength(1))
                 {
                     buttons[Xcount, Ycount].IsEnabled = true;
                     buttons[Xcount, Ycount].Content = "";
-
                     Ycount++;
                 }
                 Xcount++;
             }
             faceState = 0;
-
+            minefield.Children.Clear();
+            minefield.RowDefinitions.Clear();
+            minefield.ColumnDefinitions.Clear();
+            createGrid();
         }
-
 
         //Button Face States
         private int _faceState;
@@ -357,10 +396,13 @@ namespace MinesweeperApp
                         restartBtn.Content = ":)";
                         break;
                     case 1: //Cautious
-                        restartBtn.Content = ":?";
+                        restartBtn.Content = ":O";
                         break;
                     case 2: //Dead
-                        restartBtn.Content = "XO";
+                        restartBtn.Content = "X(";
+                        break;
+                    case 3: //Victory !
+                        restartBtn.Content = "B)";
                         break;
                     default: //Unknown
                         restartBtn.Content = ":S";
