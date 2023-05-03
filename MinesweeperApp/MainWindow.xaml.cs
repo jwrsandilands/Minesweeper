@@ -46,7 +46,7 @@ namespace MinesweeperApp
             minefield.HorizontalAlignment = HorizontalAlignment.Center;
 
             //Create the minefield
-            positionMines(10, xSize, ySize);
+            positionMines(40, xSize, ySize);
 
             //Define the Columns
             while (xSizeCount < xSize)
@@ -168,6 +168,34 @@ namespace MinesweeperApp
             int X = (int)Math.Floor(location.X / 24);
             int Y = (int)Math.Floor(location.Y / 24) - 3;
             int numBombs = mineCalculator(X, Y);
+
+            switch (numBombs)
+            {
+                case 1:
+                    btn.Foreground = Brushes.Blue;
+                    break;
+                case 2:
+                    btn.Foreground = Brushes.Green;
+                    break;
+                case 3:
+                    btn.Foreground = Brushes.Red;
+                    break;
+                case 4:
+                    btn.Foreground = Brushes.DarkBlue;
+                    break;
+                case 5:
+                    btn.Foreground = Brushes.DarkRed;
+                    break;
+                case 6:
+                    btn.Foreground = Brushes.DarkCyan;
+                    break;
+                case 7:
+                    btn.Foreground = Brushes.Black;
+                    break;
+                case 8:
+                    btn.Foreground = Brushes.DarkSlateGray;
+                    break;
+            }
 
             if (btn.Content != "1>")
             {
