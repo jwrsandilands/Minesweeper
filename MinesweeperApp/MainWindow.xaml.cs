@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.PerformanceData;
 using System.Diagnostics.Tracing;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace MinesweeperApp
             //make window adjust to whatever size necessary
             main.SizeToContent = SizeToContent.WidthAndHeight;
 
-            createGrid();
+            createGrid(50, 30);
         }
 
         public void createGrid(int xSize = 8, int ySize = 8)
@@ -77,15 +78,18 @@ namespace MinesweeperApp
                 {
                     Button btn = new Button();
                     btn.FontSize = 16;
+                    btn.PreviewMouseLeftButtonUp += new MouseButtonEventHandler(mouseUp);
 
                     foreach (Bomb bomb in bombs)
                     {
                         if (Xcount == bomb.X && Ycount == bomb.Y)
                         {
-                            btn.Click += new RoutedEventHandler(bombClicked);
+                            btn.PreviewMouseLeftButtonUp -= mouseUp;
+                            btn.PreviewMouseLeftButtonUp += new MouseButtonEventHandler(bombClicked);
+                            //btn.Content = "B";
                         }
                     }
-                    btn.Click += new RoutedEventHandler(buttonClicked);
+                    btn.PreviewMouseLeftButtonDown += new MouseButtonEventHandler(mouseDown);
                     btn.MouseRightButtonDown += new MouseButtonEventHandler(flagPlaced);
                     //btn.Content = (1 + Xcount).ToString() + Ychar;
                     buttons[Xcount,Ycount] = btn;
@@ -109,6 +113,7 @@ namespace MinesweeperApp
             }
         }
 
+        //set up the mines!
         public void positionMines(int mines = 10, int XSize = 8, int YSize = 8)
         {
             bombs = new Bomb[0];
@@ -135,27 +140,107 @@ namespace MinesweeperApp
             }
         }
 
-        void buttonClicked(object sender, EventArgs e)
+        //Oho? You clicked a square?
+        void mouseDown(object sender, EventArgs e)
         {
             Button btn = sender as Button;
 
-
             if (btn.Content != "1>")
             {
-                btn.IsEnabled = false;
+                faceState = 1;
             }
         }
 
+        //You're in the clear. :)
+        void mouseUp(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+
+            tileActivated(btn);
+        }
+
+        //activate the buttons!
+        void tileActivated(Button btn)
+        {
+            //Get the button and calculate the mines around it
+            var parent = minefield.Parent as UIElement;
+            var location = btn.TranslatePoint(new Point(0, 0), parent);
+            int X = (int)Math.Floor(location.X / 24);
+            int Y = (int)Math.Floor(location.Y / 24) - 3;
+            int numBombs = mineCalculator(X, Y);
+
+            if (btn.Content != "1>")
+            {
+                faceState = 0;
+                btn.IsEnabled = false;
+                if (numBombs != 0) { btn.Content = numBombs; }
+            }
+
+
+            //This tile has no nearby bombs. Reveal adjacent tiles
+            if(numBombs == 0)
+            {
+                //Locate the activated button!
+                //Along the corridor...
+                int Xcount = 0;
+
+                while (Xcount < buttons.GetLength(0))
+                {
+                    //Up the stairs...
+                    int Ycount = 0;
+
+                    while (Ycount < buttons.GetLength(1))
+                    {
+                        //if the button selected is found in the array
+                        if (btn == buttons[Xcount, Ycount])
+                        {
+                            //If the button isnt agaist the wall or a disabled button (NORTH)
+                            if(btn != buttons[Xcount, 0] && buttons[Xcount, Ycount - 1].IsEnabled)
+                            {
+                                //Activate the tile to the North
+                                tileActivated(buttons[Xcount, Ycount - 1]);
+                            }
+                            //If the button isnt agaist the wall or a disabled button (SOUTH)
+                            if (btn != buttons[Xcount, buttons.GetLength(1) - 1] && buttons[Xcount, Ycount + 1].IsEnabled)
+                            {
+                                //activate the tile to the south
+                                tileActivated(buttons[Xcount, Ycount + 1]);
+                            }
+                            //If the button isnt agaist the wall or a disabled button (WEST)
+                            if (btn != buttons[0, Ycount] && buttons[Xcount - 1, Ycount].IsEnabled)
+                            {
+                                //Activate the tile to the West
+                                tileActivated(buttons[Xcount - 1, Ycount]);
+                            }
+                            //If the button isnt agaist the wall or a disabled button (EAST)
+                            if (btn != buttons[buttons.GetLength(0) -1, Ycount] && buttons[Xcount + 1, Ycount].IsEnabled)
+                            {
+                                //Activate the tile to the east
+                                tileActivated(buttons[Xcount + 1, Ycount]);
+                            }
+                            break;
+                        }
+                        Ycount++;
+                    }
+                    Xcount++;
+                }
+            }
+
+        }
+
+        //You clicked a bomb!
         void bombClicked(object sender, EventArgs e)
         {
             Button btn = sender as Button;
             if(btn.Content != "1>")
             {
+                faceState = 2;
                 btn.Content = "*";
-                restartBtn.Content = "XO";
+                btn.IsEnabled = false;
             }
         }
 
+        //when a flag is placed (Right Click)
         void flagPlaced(object sender, EventArgs e)
         {
             Button btn = sender as Button;
@@ -169,6 +254,8 @@ namespace MinesweeperApp
             }
         }
 
+
+        //When the reset button is clicked...
         private void restartBtn_Click(object sender, RoutedEventArgs e)
         {
             int Xcount = 0;
@@ -187,8 +274,90 @@ namespace MinesweeperApp
                 }
                 Xcount++;
             }
-            restartBtn.Content = ":)";
+            faceState = 0;
 
+        }
+
+
+        //Button Face States
+        private int _faceState;
+
+        public int faceState
+        {
+            get => _faceState;
+            set
+            {
+                _faceState = value;
+                switch (_faceState)
+                {
+                    case 0: //Happy
+                        restartBtn.Content = ":)";
+                        break;
+                    case 1: //Cautious
+                        restartBtn.Content = ":?";
+                        break;
+                    case 2: //Dead
+                        restartBtn.Content = "XO";
+                        break;
+                    default: //Unknown
+                        restartBtn.Content = ":S";
+                        break;
+                }
+            }
+        }
+
+        //Calculate adjacent mines...
+        int mineCalculator(int x, int y)
+        {
+            int numBombs = 0;
+
+            //Search around the square for bombs
+            //X..
+            if (bombs.Any(bomb => bomb.X == x -1 && bomb.Y == y -1))
+            {
+                numBombs++;
+            }
+            //.X.
+            if (bombs.Any(bomb => bomb.X == x && bomb.Y == y - 1))
+            {
+                numBombs++;
+            }
+            //..X
+            if (bombs.Any(bomb => bomb.X == x + 1 && bomb.Y == y - 1))
+            {
+                numBombs++;
+            }
+
+            //X..
+            if (bombs.Any(bomb => bomb.X == x - 1 && bomb.Y == y))
+            {
+                numBombs++;
+            }
+            //.X.
+
+            //..X
+            if (bombs.Any(bomb => bomb.X == x + 1 && bomb.Y == y))
+            {
+                numBombs++;
+            }
+
+            //X..
+            if (bombs.Any(bomb => bomb.X == x - 1 && bomb.Y == y + 1))
+            {
+                numBombs++;
+            }
+            //.X.
+            if (bombs.Any(bomb => bomb.X == x && bomb.Y == y + 1))
+            {
+                numBombs++;
+            }
+            //..X
+            if (bombs.Any(bomb => bomb.X == x + 1 && bomb.Y == y + 1))
+            {
+                numBombs++;
+            }
+
+            return numBombs;
         }
     }
 }
