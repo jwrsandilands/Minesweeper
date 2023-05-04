@@ -392,6 +392,14 @@ namespace MinesweeperApp
                             buttons[Xcount, Ycount].Foreground = Brushes.Black;
                             buttons[Xcount, Ycount].IsEnabled = false;
                         }
+                        else if(buttons[Xcount, Ycount].Content == "🚩")
+                        {
+                            buttons[Xcount, Ycount].FontSize = 16;
+                            buttons[Xcount, Ycount].FontWeight = FontWeights.Bold;
+                            buttons[Xcount, Ycount].Content = "X";
+                            buttons[Xcount, Ycount].Foreground = Brushes.Red;
+                            buttons[Xcount, Ycount].IsEnabled = false;
+                        }
 
                         Ycount++;
                     }
