@@ -40,3 +40,5 @@ C:\Users\icek0\Documents\GitHub\MinesweeperApp\MinesweeperApp\obj\Debug\net6.0-w
 C:\Users\icek0\Documents\GitHub\MinesweeperApp\MinesweeperApp\obj\Debug\net6.0-windows\MinesweeperApp.pdb
 C:\Users\icek0\Documents\GitHub\MinesweeperApp\MinesweeperApp\obj\Debug\net6.0-windows\MinesweeperApp.genruntimeconfig.cache
 C:\Users\icek0\Documents\GitHub\MinesweeperApp\MinesweeperApp\obj\Debug\net6.0-windows\ref\MinesweeperApp.dll
+C:\Users\icek0\Documents\GitHub\MinesweeperApp\MinesweeperApp\obj\Debug\net6.0-windows\DifficultyWindow.g.cs
+C:\Users\icek0\Documents\GitHub\MinesweeperApp\MinesweeperApp\obj\Debug\net6.0-windows\DifficultyWindow.baml

@@ -28,13 +28,15 @@ namespace MinesweeperApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        Button[,] buttons;
-        Bomb[] bombs;
+        public Button[,] buttons;
+        public Bomb[] bombs;
 
         int flagCounter = 0;
 
-        Stopwatch clock;
-        DispatcherTimer dt = new DispatcherTimer();
+        public Stopwatch clock;
+        public DispatcherTimer dt = new DispatcherTimer();
+
+
 
         public MainWindow()
         {
@@ -49,7 +51,7 @@ namespace MinesweeperApp
             createGrid();
         }
 
-        public void createGrid(int xSize = 9, int ySize = 9)
+        public void createGrid(int xSize = 9, int ySize = 9, int mines = 10)
         {
             //create grid's size counters
             int xSizeCount = 0, ySizeCount = 0;
@@ -60,7 +62,7 @@ namespace MinesweeperApp
             clock = new Stopwatch();
 
             //Create the minefield
-            positionMines(10, xSize, ySize);
+            positionMines(mines, xSize, ySize);
 
             //Define the Columns
             while (xSizeCount < xSize)
@@ -392,7 +394,7 @@ namespace MinesweeperApp
                             buttons[Xcount, Ycount].Foreground = Brushes.Black;
                             buttons[Xcount, Ycount].IsEnabled = false;
                         }
-                        else if(buttons[Xcount, Ycount].Content == "🚩")
+                        else if(!bombs.Any(bomb => bomb.X == Xcount && bomb.Y == Ycount) && btn != buttons[Xcount, Ycount] && buttons[Xcount, Ycount].Content == "🚩")
                         {
                             buttons[Xcount, Ycount].FontSize = 16;
                             buttons[Xcount, Ycount].FontWeight = FontWeights.Bold;
@@ -443,8 +445,12 @@ namespace MinesweeperApp
         //When the reset button is clicked...
         private void restartBtn_Click(object sender, RoutedEventArgs e)
         {
-            GridLength space = new GridLength(24, GridUnitType.Pixel);
+            restartGame(buttons.GetLength(0), buttons.GetLength(1), bombs.Length);
+        }
 
+        //Reset the game!
+        public void restartGame(int width = 9, int height = 9, int mines = 10)
+        {
             //along the corridor
             int Xcount = 0;
 
@@ -465,7 +471,7 @@ namespace MinesweeperApp
             minefield.Children.Clear();
             minefield.RowDefinitions.Clear();
             minefield.ColumnDefinitions.Clear();
-            createGrid();
+            createGrid(width, height, mines);
         }
 
         //Button Face States
@@ -598,6 +604,44 @@ namespace MinesweeperApp
                 }
                 Xcount++;
             }
+        }
+
+        private void difficultyBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //stop the clock
+            if (clock.IsRunning)
+            {
+                clock.Stop();
+            }
+
+            //Create new difficulty Window
+            DifficultyWindow diff = new DifficultyWindow();
+
+            //get the difficulty to display
+            if(buttons.GetLength(0) == 9 && buttons.GetLength(1) == 9 && bombs.Length == 10)
+            {
+                diff.easyBtn.IsChecked = true;
+            }
+            else if(buttons.GetLength(0) == 16 && buttons.GetLength(1) == 16 && bombs.Length == 40)
+            {
+                diff.normBtn.IsChecked = true;
+            }
+            else if (buttons.GetLength(0) == 30 && buttons.GetLength(1) == 16 && bombs.Length == 99)
+            {
+                diff.hardBtn.IsChecked = true;
+            }
+            else
+            {
+                //if custom get the attributes of the difficulty
+                diff.wTxt.Text = buttons.GetLength(0).ToString();
+                diff.hTxt.Text = buttons.GetLength(1).ToString();
+                diff.bTxt.Text = bombs.Length.ToString();
+                diff.custBtn.IsChecked = true;
+            }
+
+            //show the window and disable the main
+            main.IsEnabled = false;
+            diff.Show();
         }
     }
 }

@@ -5,15 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MinesweeperApp"
         mc:Ignorable="d"
-        Title="Minesweeper" Height="600" Width="450" ResizeMode="NoResize">
+        Title="Minesweeper" Height="650" Width="450" ResizeMode="NoResize">
     <Grid>
-        <Button x:Name="restartBtn" Content=":)" HorizontalAlignment="Center" Margin="0,15,0,0" VerticalAlignment="Top" Height="50" Width="50" FontSize="24" Click="restartBtn_Click"/>
-        <Label x:Name="flagCounterDisplay" Content="000" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" Height="50" Width="84" FontSize="36" Padding="5,0,5,0"/>
-        <Label x:Name="timeCounterDisplay" Content="000" HorizontalAlignment="Right" Margin="0,15,10,0" VerticalAlignment="Top" Height="50" Width="84" FontSize="36" FlowDirection="RightToLeft" Padding="5,0,5,0"/>
+        <Button x:Name="difficultyBtn" Content="Difficulty" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="24" Width="65" Click="difficultyBtn_Click"/>
+        <Grid Margin="0,34,0,0">
+            <Button x:Name="restartBtn" Content=":)" HorizontalAlignment="Center" Margin="0,15,0,0" VerticalAlignment="Top" Height="50" Width="50" FontSize="24" Click="restartBtn_Click"/>
+            <Label x:Name="flagCounterDisplay" Content="000" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" Height="50" Width="84" FontSize="36" Padding="5,0,5,0"/>
+            <Label x:Name="timeCounterDisplay" Content="000" HorizontalAlignment="Right" Margin="0,15,10,0" VerticalAlignment="Top" Height="50" Width="84" FontSize="36" FlowDirection="RightToLeft" Padding="5,0,5,0"/>
 
-        <Grid x:Name="minefield" Margin="8,80,8,8" >
+            <Grid x:Name="minefield" Margin="8,80,8,8" >
 
+            </Grid>
         </Grid>
-
     </Grid>
 </Window>

@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\icek0\Documents\GitHub\MinesweeperApp\MinesweeperApp\App.xaml
-11407045341
+21617823600
 
-6981878849
+7-2109841572
 1941709816142
-MainWindow.xaml;
+DifficultyWindow.xaml;MainWindow.xaml;
 
 True
 
