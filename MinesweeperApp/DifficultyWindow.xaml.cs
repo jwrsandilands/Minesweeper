@@ -196,6 +196,7 @@ namespace MinesweeperApp
         //if the width box value is changed to something it cant be default to something it can be
         private void bTxt_TextChanged(object sender, RoutedEventArgs e)
         {
+            //Check if the data is actually suitable
             if (bTxt.Text == "")
             {
                 bTxt.Text = "1";
@@ -206,17 +207,31 @@ namespace MinesweeperApp
             }
             else if (i < 1)
             {
-                bTxt.Text = "1";
-
-                if (i < (int.Parse(hTxt.Text) * int.Parse(wTxt.Text)) - 1)
+                //if the number is too small make it as big as it is required to be
+                if (i < (int.Parse(wTxt.Text) * 2) && int.Parse(hTxt.Text) * int.Parse(wTxt.Text) > 1200)
                 {
                     bTxt.Text = (int.Parse(wTxt.Text) * 2).ToString();
                 }
+                else
+                {
+                    bTxt.Text = "1";
+                }
             }
-            else if (i > 999)
+            else if (i > (int.Parse(hTxt.Text) * int.Parse(wTxt.Text)) - 1)
             {
-                bTxt.Text = "999";
+                //if the number is too big make it the maximum value or cap it to 999
+                i = (int.Parse(hTxt.Text) * int.Parse(wTxt.Text) - 1);
+
+                if (i > 999)
+                {
+                    bTxt.Text = "999";
+                }
+                else
+                {
+                    bTxt.Text = i.ToString();
+                }
             }
+
         }
     }
 }
