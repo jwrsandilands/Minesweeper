@@ -62,9 +62,28 @@ namespace MinesweeperApp
                     }
                     else if(custBtn.IsChecked == true)
                     {
+
+
+                        //Get the width (within reason!)
                         width = int.Parse(wTxt.Text);
+                        if(width < 8) { width = 8; }
+                        else if (width > 78) { width = 78; }
+
+                        //Get the Height (within reason!)
                         height = int.Parse(hTxt.Text);
+                        if(height <8) { height = 8; }
+                        else if (height > 36) { height = 36; }
+
+                        //Get the number of bombs (within reason!)
                         bombs = int.Parse(bTxt.Text);
+                        if(bombs <= 0) { bombs = 1; }
+                        else if(bombs > (width * height) - 1) { bombs = (width * height) - 1; }
+                        
+                        //if your bombs dont fit the space well enough...
+                        if(bombs < (width * 2) && (width * height) > 1200)
+                        {
+                            bombs = width * 2;
+                        }
                     }
 
                     //end and restart the game
