@@ -35,6 +35,7 @@ namespace MinesweeperApp
 
         public Stopwatch clock;
         public DispatcherTimer dt = new DispatcherTimer();
+        public bool gameover = false;
 
         public MainWindow()
         {
@@ -412,8 +413,8 @@ namespace MinesweeperApp
                     }
                     Xcount++;
                 }
-
             }
+            gameover = true;
         }
 
         //when a flag is placed (Right Click)
@@ -456,22 +457,8 @@ namespace MinesweeperApp
         //Reset the game!
         public void restartGame(int width = 9, int height = 9, int mines = 10)
         {
-            //along the corridor
-            int Xcount = 0;
-
-            while (Xcount < buttons.GetLength(0))
-            {
-                //Up the stairs...
-                int Ycount = 0;
-                while (Ycount < buttons.GetLength(1))
-                {
-                    buttons[Xcount, Ycount].IsEnabled = true;
-                    buttons[Xcount, Ycount].Content = "";
-                    Ycount++;
-                }
-                Xcount++;
-            }
             faceState = 0;
+            gameover = false;
             timeCounterDisplay.Content = "000";
             minefield.Children.Clear();
             minefield.RowDefinitions.Clear();
@@ -603,6 +590,7 @@ namespace MinesweeperApp
 
             //Set Face Status
             faceState = 3;
+            gameover = true;
 
             //Locate and disable all buttons
             //Along the corridor...
@@ -630,8 +618,6 @@ namespace MinesweeperApp
                 }
                 Xcount++;
             }
-
-
         }
 
         private void difficultyBtn_Click(object sender, RoutedEventArgs e)

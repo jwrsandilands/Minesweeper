@@ -80,6 +80,7 @@ namespace MinesweeperApp
                         bombs = int.Parse(bTxt.Text);
                         if(bombs <= 0) { bombs = 1; }
                         else if(bombs > (width * height) - 1) { bombs = (width * height) - 1; }
+                        else if(bombs > 9990) { bombs = 999; }
                         
                         //if your bombs dont fit the space well enough...
                         if(bombs < (width * 2) && (width * height) > 1200)
@@ -118,7 +119,7 @@ namespace MinesweeperApp
                     gameBegun = main.clock.Elapsed.TotalSeconds > 0;
 
                     //if the game has already started restart the clock
-                    if (gameBegun)
+                    if (gameBegun && !main.gameover)
                     {
                         main.clock.Start();
                         main.dt.Start();
@@ -143,11 +144,11 @@ namespace MinesweeperApp
         {
             if (hTxt.Text == "")
             {
-                hTxt.Text = "0";
+                hTxt.Text = "1";
             }
             else if (!int.TryParse(hTxt.Text, out int i))
             {
-                hTxt.Text = "0";
+                hTxt.Text = "1";
             }
             else if (i > 36)
             {
@@ -170,11 +171,11 @@ namespace MinesweeperApp
         {
             if (wTxt.Text == "")
             {
-                wTxt.Text = "0";
+                wTxt.Text = "8";
             }
             else if (!int.TryParse(wTxt.Text, out int i))
             {
-                wTxt.Text = "0";
+                wTxt.Text = "8";
             }
             else if (i > 78)
             {
@@ -197,19 +198,24 @@ namespace MinesweeperApp
         {
             if (bTxt.Text == "")
             {
-                bTxt.Text = "0";
+                bTxt.Text = "1";
             }
             else if (!int.TryParse(bTxt.Text, out int i))
             {
-                bTxt.Text = "0";
+                bTxt.Text = "1";
             }
             else if (i < 1)
             {
                 bTxt.Text = "1";
+
+                if (i < (int.Parse(hTxt.Text) * int.Parse(wTxt.Text)) - 1)
+                {
+                    bTxt.Text = (int.Parse(wTxt.Text) * 2).ToString();
+                }
             }
-            else if (i > (int.Parse(hTxt.Text) * int.Parse(wTxt.Text)) - 1) 
+            else if (i > 999)
             {
-                bTxt.Text = ((int.Parse(hTxt.Text) * int.Parse(wTxt.Text)) - 1).ToString();
+                bTxt.Text = "999";
             }
         }
     }
