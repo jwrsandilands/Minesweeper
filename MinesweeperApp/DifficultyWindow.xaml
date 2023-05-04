@@ -31,21 +31,21 @@
             <Label Content="9" Width="16" Padding="5,0,5,0"/>
             <Label Content="16" Width="25" Padding="5,0,5,0"/>
             <Label Content="16" Width="25" Padding="5,0,5,0"/>
-            <TextBox x:Name="hTxt" Text="20" Width="35" Padding="0,0,0,0"/>
+            <TextBox x:Name="hTxt" Text="20" Width="35" Padding="0,0,0,0" PreviewMouseLeftButtonDown="hTxt_TextFocus" LostFocus="hTxt_TextChanged"/>
         </StackPanel>
 
         <StackPanel Margin="45,0,44,0" Grid.Column="1" Grid.Row="1">
             <Label Content="9" Width="16" Padding="5,0,5,0"/>
             <Label Content="16" Width="25" Padding="5,0,5,0"/>
             <Label Content="30" Width="25" Padding="5,0,5,0"/>
-            <TextBox x:Name="wTxt" Text="30" Width="35" Padding="0,0,0,0"/>
+            <TextBox x:Name="wTxt" Text="30" Width="35" Padding="0,0,0,0" PreviewMouseLeftButtonDown="wTxt_TextFocus" LostFocus="wTxt_TextChanged"/>
         </StackPanel>
 
         <StackPanel Margin="85,0,0,0" Grid.Column="1" Grid.Row="1">
             <Label Content="10" Width="25" Padding="5,0,5,0"/>
             <Label Content="40" Width="25" Padding="5,0,5,0"/>
             <Label Content="99" Width="25" Padding="5,0,5,0"/>
-            <TextBox x:Name="bTxt" Text="145" Width="35" Padding="0,0,0,0"/>
+            <TextBox x:Name="bTxt" Text="145" Width="35" Padding="0,0,0,0" PreviewMouseLeftButtonDown="bTxt_TextFocus" LostFocus="bTxt_TextChanged"/>
         </StackPanel>
 
         <Button Content="New Game" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Width="90" Height="20" Margin="0,5,0,0" Click="Button_Click"/>

@@ -28,15 +28,13 @@ namespace MinesweeperApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        public Button[,] buttons;
-        public Bomb[] bombs;
+        Button[,] buttons;
+        Bomb[] bombs;
 
         int flagCounter = 0;
 
         public Stopwatch clock;
         public DispatcherTimer dt = new DispatcherTimer();
-
-
 
         public MainWindow()
         {
@@ -254,7 +252,7 @@ namespace MinesweeperApp
                             //If the button isnt agaist the wall or a disabled button (NORTHWEST)
                             if (btn != buttons[0, Ycount] && btn != buttons[Xcount, 0] && buttons[Xcount - 1, Ycount - 1].IsEnabled)
                             {
-                                //Activate the tile to the West
+                                //Activate the tile to the NorthWest
                                 tileActivated(buttons[Xcount - 1, Ycount - 1]);
                             }
 
@@ -268,7 +266,7 @@ namespace MinesweeperApp
                             //If the button isnt agaist the wall or a disabled button (NORTHEAST)
                             if (btn != buttons[Xcount, 0] && btn != buttons[buttons.GetLength(0) - 1, Ycount] && buttons[Xcount + 1, Ycount - 1].IsEnabled)
                             {
-                                //Activate the tile to the North
+                                //Activate the tile to the NorthEast
                                 tileActivated(buttons[Xcount + 1, Ycount - 1]);
                             }
 
@@ -289,7 +287,7 @@ namespace MinesweeperApp
                             //If the button isnt agaist the wall or a disabled button (SOUTHWEST)
                             if (btn != buttons[Xcount, buttons.GetLength(1) - 1] && btn != buttons[0, Ycount] && buttons[Xcount - 1, Ycount + 1].IsEnabled)
                             {
-                                //activate the tile to the south
+                                //activate the tile to the southwest
                                 tileActivated(buttons[Xcount - 1, Ycount + 1]);
                             }
 
@@ -303,7 +301,7 @@ namespace MinesweeperApp
                             //If the button isnt agaist the wall or a disabled button (SOUTHEAST)
                             if (btn != buttons[Xcount, buttons.GetLength(1) - 1] && btn != buttons[buttons.GetLength(0) - 1, Ycount] && buttons[Xcount + 1, Ycount + 1].IsEnabled)
                             {
-                                //activate the tile to the south
+                                //activate the tile to the southeast
                                 tileActivated(buttons[Xcount + 1, Ycount + 1]);
                             }
 
@@ -359,7 +357,14 @@ namespace MinesweeperApp
                 }
                 TimeSpan time = clock.Elapsed;
                 //print the total seconds to the display
-                timeCounterDisplay.Content = time.TotalSeconds.ToString("000");
+                if (time.TotalSeconds < 999)
+                {
+                    timeCounterDisplay.Content = time.TotalSeconds.ToString("000");
+                }
+                else
+                {
+                    timeCounterDisplay.Content = "999";
+                }
 
                 faceState = 2;
                 btn.FontSize = 20;
@@ -565,7 +570,15 @@ namespace MinesweeperApp
             {
                 TimeSpan time = clock.Elapsed;
                 //print the total seconds to the display
-                timeCounterDisplay.Content = time.TotalSeconds.ToString("000");
+                if (time.TotalSeconds < 999)
+                {
+                    timeCounterDisplay.Content = (time.TotalSeconds).ToString("000");
+                }
+                else
+                {
+                    timeCounterDisplay.Content = "999";
+                    clock.Stop();
+                }
             }
         }
 
@@ -579,7 +592,14 @@ namespace MinesweeperApp
             }
             TimeSpan time = clock.Elapsed;
             //print the total seconds to the display
-            timeCounterDisplay.Content = time.TotalSeconds.ToString("000");
+            if (time.TotalSeconds < 999)
+            {
+                timeCounterDisplay.Content = time.TotalSeconds.ToString("000");
+            }
+            else
+            {
+                timeCounterDisplay.Content = "999";
+            }
 
             //Set Face Status
             faceState = 3;

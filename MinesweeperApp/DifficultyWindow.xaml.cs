@@ -10,7 +10,9 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace MinesweeperApp
 {
@@ -71,7 +73,7 @@ namespace MinesweeperApp
 
                         //Get the Height (within reason!)
                         height = int.Parse(hTxt.Text);
-                        if(height <8) { height = 8; }
+                        if(height <1) { height = 1; }
                         else if (height > 36) { height = 36; }
 
                         //Get the number of bombs (within reason!)
@@ -125,6 +127,89 @@ namespace MinesweeperApp
                     //re-enable the window
                     main.IsEnabled = true;
                 }
+            }
+        }
+
+        //check if the Height box is clicked
+        private void hTxt_TextFocus(object sender, System.EventArgs e)
+        {
+            //hTxt.Text = "";
+
+            //check the custom button
+            custBtn.IsChecked = true;
+        }
+        //if the height box value is changed to something it cant be default to something it can be
+        private void hTxt_TextChanged(object sender, RoutedEventArgs e)
+        {
+            if (hTxt.Text == "")
+            {
+                hTxt.Text = "0";
+            }
+            else if (!int.TryParse(hTxt.Text, out int i))
+            {
+                hTxt.Text = "0";
+            }
+            else if (i > 36)
+            {
+                hTxt.Text = "36";
+            }
+            else if (i < 1)
+            {
+                hTxt.Text = "1";
+            }
+        }
+
+        //check if the width box is clicked
+        private void wTxt_TextFocus(object sender, System.EventArgs e)
+        {
+            //check the custom button
+            custBtn.IsChecked = true;
+        }
+        //if the width box value is changed to something it cant be default to something it can be
+        private void wTxt_TextChanged(object sender, RoutedEventArgs e)
+        {
+            if (wTxt.Text == "")
+            {
+                wTxt.Text = "0";
+            }
+            else if (!int.TryParse(wTxt.Text, out int i))
+            {
+                wTxt.Text = "0";
+            }
+            else if (i > 78)
+            {
+                wTxt.Text = "78";
+            }
+            else if (i < 8)
+            {
+                wTxt.Text = "8";
+            }
+        }
+
+        //check if the width box is clicked
+        private void bTxt_TextFocus(object sender, System.EventArgs e)
+        {
+            //check the custom button
+            custBtn.IsChecked = true;
+        }
+        //if the width box value is changed to something it cant be default to something it can be
+        private void bTxt_TextChanged(object sender, RoutedEventArgs e)
+        {
+            if (bTxt.Text == "")
+            {
+                bTxt.Text = "0";
+            }
+            else if (!int.TryParse(bTxt.Text, out int i))
+            {
+                bTxt.Text = "0";
+            }
+            else if (i < 1)
+            {
+                bTxt.Text = "1";
+            }
+            else if (i > (int.Parse(hTxt.Text) * int.Parse(wTxt.Text)) - 1) 
+            {
+                bTxt.Text = ((int.Parse(hTxt.Text) * int.Parse(wTxt.Text)) - 1).ToString();
             }
         }
     }
