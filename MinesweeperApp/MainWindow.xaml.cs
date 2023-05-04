@@ -390,7 +390,7 @@ namespace MinesweeperApp
                         buttons[Xcount, Ycount].PreviewMouseLeftButtonUp -= mouseUp;
                         buttons[Xcount, Ycount].MouseRightButtonDown -= flagPlaced;
 
-                        //if the bombs arent flagged, reveal them to the player!
+                        //if the bombs arent flagged, reveal them to the player! (And reveal their mistakes with an X)
                         if (bombs.Any(bomb => bomb.X == Xcount && bomb.Y == Ycount) && btn != buttons[Xcount, Ycount] && buttons[Xcount, Ycount].Content != "🚩")
                         {
                             buttons[Xcount, Ycount].FontSize = 20;
@@ -615,15 +615,23 @@ namespace MinesweeperApp
 
                 while (Ycount < buttons.GetLength(1))
                 {
+                    //Remove button functions
                     buttons[Xcount, Ycount].PreviewMouseLeftButtonDown -= mouseDown;
                     buttons[Xcount, Ycount].PreviewMouseLeftButtonUp -= bombClicked;
                     buttons[Xcount, Ycount].PreviewMouseLeftButtonUp -= mouseUp;
                     buttons[Xcount, Ycount].MouseRightButtonDown -= flagPlaced;
 
+                    //If there are unflagged bombs remaining, flag them.
+                    if (bombs.Any(bomb => bomb.X == Xcount && bomb.Y == Ycount) && buttons[Xcount, Ycount].Content != "🚩")
+                    {
+                        buttons[Xcount, Ycount].Content = "🚩";
+                    }
                     Ycount++;
                 }
                 Xcount++;
             }
+
+
         }
 
         private void difficultyBtn_Click(object sender, RoutedEventArgs e)
