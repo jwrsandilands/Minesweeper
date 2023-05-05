@@ -78,7 +78,7 @@ namespace MinesweeperApp
                         bombs = int.Parse(bTxt.Text);
                         if(bombs <= 0) { bombs = 1; }
                         else if(bombs > (width * height) - 1) { bombs = (width * height) - 1; }
-                        else if(bombs > 9990) { bombs = 999; }
+                        else if(bombs > 999) { bombs = 999; }
                         
                         //if your bombs dont fit the space well enough...
                         if(bombs < (width * 2) && (width * height) > 1200)
@@ -88,8 +88,8 @@ namespace MinesweeperApp
                     }
 
                     //end and restart the game
-                    main.gameEnd();
-                    main.restartGame(width, height, bombs);
+                    main.GameEnd();
+                    main.RestartGame(width, height, bombs);
 
                     //re-enable the window
                     main.IsEnabled = true;
@@ -129,7 +129,7 @@ namespace MinesweeperApp
         }
 
         //check if the Height box is clicked
-        private void hTxt_TextFocus(object sender, System.EventArgs e)
+        private void HTxt_TextFocus(object sender, System.EventArgs e)
         {
             //hTxt.Text = "";
 
@@ -137,7 +137,7 @@ namespace MinesweeperApp
             custBtn.IsChecked = true;
         }
         //if the height box value is changed to something it cant be default to something it can be
-        private void hTxt_TextChanged(object sender, RoutedEventArgs e)
+        private void HTxt_TextChanged(object sender, RoutedEventArgs e)
         {
             if (hTxt.Text == "")
             {
@@ -158,13 +158,13 @@ namespace MinesweeperApp
         }
 
         //check if the width box is clicked
-        private void wTxt_TextFocus(object sender, System.EventArgs e)
+        private void WTxt_TextFocus(object sender, System.EventArgs e)
         {
             //check the custom button
             custBtn.IsChecked = true;
         }
         //if the width box value is changed to something it cant be default to something it can be
-        private void wTxt_TextChanged(object sender, RoutedEventArgs e)
+        private void WTxt_TextChanged(object sender, RoutedEventArgs e)
         {
             if (wTxt.Text == "")
             {
@@ -185,13 +185,13 @@ namespace MinesweeperApp
         }
 
         //check if the width box is clicked
-        private void bTxt_TextFocus(object sender, System.EventArgs e)
+        private void BTxt_TextFocus(object sender, System.EventArgs e)
         {
             //check the custom button
             custBtn.IsChecked = true;
         }
         //if the width box value is changed to something it cant be default to something it can be
-        private void bTxt_TextChanged(object sender, RoutedEventArgs e)
+        private void BTxt_TextChanged(object sender, RoutedEventArgs e)
         {
             //Check if the data is actually suitable
             if (bTxt.Text == "")

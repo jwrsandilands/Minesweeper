@@ -74,18 +74,18 @@ namespace MinesweeperApp
             InitializeComponent();
 
             //set basic elements for the clock
-            timer.Tick += new EventHandler(timerTicks);
+            timer.Tick += new EventHandler(TimerTicks);
             timer.Interval = new TimeSpan(0, 0, 0, 0, 1);
 
             //make window adjust to whatever size necessary
             main.SizeToContent = SizeToContent.WidthAndHeight;
 
             //create the minefield
-            createGrid();
+            CreateGrid();
         }
 
         //Grid's basic size and elements are the beginner grid's properties
-        private void createGrid(int xSize = 9, int ySize = 9, int mines = 10)
+        private void CreateGrid(int xSize = 9, int ySize = 9, int mines = 10)
         {
             //create grid's size counters and set the size the buttons will take up
             int xSizeCount = 0, ySizeCount = 0;
@@ -96,7 +96,7 @@ namespace MinesweeperApp
             clock = new Stopwatch();
 
             //Create the bombs' co-ords for placement in the field
-            positionMines(mines, xSize, ySize);
+            PositionMines(mines, xSize, ySize);
 
             //Define the Columns
             while (xSizeCount < xSize)
@@ -128,7 +128,7 @@ namespace MinesweeperApp
                     //You are a button...
                     Button btn = new Button();
                     btn.FontSize = 16;
-                    btn.PreviewMouseLeftButtonUp += new MouseButtonEventHandler(mouseUp);
+                    btn.PreviewMouseLeftButtonUp += new MouseButtonEventHandler(MouseUp);
 
                     //... unless you're a bomb...
                     foreach (Bomb bomb in bombs)
@@ -136,14 +136,14 @@ namespace MinesweeperApp
                         //... and if you are a bomb you will go boom
                         if (Xcount == bomb.X && Ycount == bomb.Y)
                         {
-                            btn.PreviewMouseLeftButtonUp -= mouseUp;
-                            btn.PreviewMouseLeftButtonUp += new MouseButtonEventHandler(bombClicked);
+                            btn.PreviewMouseLeftButtonUp -= MouseUp;
+                            btn.PreviewMouseLeftButtonUp += new MouseButtonEventHandler(BombClicked);
                             //btn.Content = "B";
                         }
                     }
                     //both buttons and bombs can be stepped on/flagged
-                    btn.PreviewMouseLeftButtonDown += new MouseButtonEventHandler(mouseDown);
-                    btn.MouseRightButtonDown += new MouseButtonEventHandler(flagPlaced);
+                    btn.PreviewMouseLeftButtonDown += new MouseButtonEventHandler(MouseDown);
+                    btn.MouseRightButtonDown += new MouseButtonEventHandler(FlagPlaced);
 
                     //place the button/bomb
                     buttons[Xcount, Ycount] = btn;
@@ -167,7 +167,7 @@ namespace MinesweeperApp
         }
 
         //set up the mines!
-        private void positionMines(int mines = 10, int XSize = 9, int YSize = 9)
+        private void PositionMines(int mines = 10, int XSize = 9, int YSize = 9)
         {
             //set bomb array size
             bombs = new Bomb[0];
@@ -201,7 +201,7 @@ namespace MinesweeperApp
         }
 
         //Oho? You clicked a square?
-        private void mouseDown(object sender, EventArgs e)
+        private void MouseDown(object sender, EventArgs e)
         {
             Button btn = sender as Button;
 
@@ -220,26 +220,26 @@ namespace MinesweeperApp
         }
 
         //You're in the clear. :)
-        private void mouseUp(object sender, EventArgs e)
+        private void MouseUp(object sender, EventArgs e)
         {
             Button btn = sender as Button;
 
             //only allow clicks if not flagged
             if (btn.Content != "🚩")
             {
-                tileActivated(btn);
+                TileActivated(btn);
             }
         }
 
         //activate the buttons!
-        private void tileActivated(Button btn)
+        private void TileActivated(Button btn)
         {
             //Get the button and calculate the mines around it
             var parent = minefield.Parent as UIElement;
             var location = btn.TranslatePoint(new Point(0, 0), parent);
             int X = (int)Math.Floor(location.X / 24);
             int Y = (int)Math.Floor(location.Y / 24) - 3;
-            int numBombs = mineCalculator(X, Y);
+            int numBombs = MineCalculator(X, Y);
 
             //do not allow iterative unflagging or colour changing
             if (btn.Content != "🚩")
@@ -305,49 +305,49 @@ namespace MinesweeperApp
                             //... NORTHWEST 
                             if ((btn != buttons[0, Ycount]) && (btn != buttons[Xcount, 0]) && (buttons[Xcount - 1, Ycount - 1].IsEnabled))
                             {
-                                tileActivated(buttons[Xcount - 1, Ycount - 1]);
+                                TileActivated(buttons[Xcount - 1, Ycount - 1]);
                             }
 
                             //... NORTH
                             if ((btn != buttons[Xcount, 0]) && (buttons[Xcount, Ycount - 1].IsEnabled))
                             {
-                                tileActivated(buttons[Xcount, Ycount - 1]);
+                                TileActivated(buttons[Xcount, Ycount - 1]);
                             }
 
                             //... NORTHEAST
                             if ((btn != buttons[Xcount, 0]) && (btn != buttons[buttons.GetLength(0) - 1, Ycount]) && (buttons[Xcount + 1, Ycount - 1].IsEnabled))
                             {
-                                tileActivated(buttons[Xcount + 1, Ycount - 1]);
+                                TileActivated(buttons[Xcount + 1, Ycount - 1]);
                             }
 
                             //... WEST
                             if ((btn != buttons[0, Ycount]) && (buttons[Xcount - 1, Ycount].IsEnabled))
                             {
-                                tileActivated(buttons[Xcount - 1, Ycount]);
+                                TileActivated(buttons[Xcount - 1, Ycount]);
                             }
 
                             //... EAST
                             if ((btn != buttons[buttons.GetLength(0) - 1, Ycount]) && (buttons[Xcount + 1, Ycount].IsEnabled))
                             {
-                                tileActivated(buttons[Xcount + 1, Ycount]);
+                                TileActivated(buttons[Xcount + 1, Ycount]);
                             }
 
                             //... SOUTHWEST
                             if ((btn != buttons[Xcount, buttons.GetLength(1) - 1]) && (btn != buttons[0, Ycount]) && (buttons[Xcount - 1, Ycount + 1].IsEnabled))
                             {
-                                tileActivated(buttons[Xcount - 1, Ycount + 1]);
+                                TileActivated(buttons[Xcount - 1, Ycount + 1]);
                             }
 
                             //... SOUTH
                             if ((btn != buttons[Xcount, buttons.GetLength(1) - 1]) && (buttons[Xcount, Ycount + 1].IsEnabled))
                             {
-                                tileActivated(buttons[Xcount, Ycount + 1]);
+                                TileActivated(buttons[Xcount, Ycount + 1]);
                             }
 
                             //... SOUTHEAST 
                             if ((btn != buttons[Xcount, buttons.GetLength(1) - 1]) && (btn != buttons[buttons.GetLength(0) - 1, Ycount]) && (buttons[Xcount + 1, Ycount + 1].IsEnabled))
                             {
-                                tileActivated(buttons[Xcount + 1, Ycount + 1]);
+                                TileActivated(buttons[Xcount + 1, Ycount + 1]);
                             }
 
                             break;
@@ -383,12 +383,12 @@ namespace MinesweeperApp
             //if every tile that isn't a bomb is revealed, victory!
             if (truthCount == buttons.Length - bombs.Length)
             {
-                gameEnd();
+                GameEnd();
             }
         }
 
         //You clicked a bomb!
-        private void bombClicked(object sender, EventArgs e)
+        private void BombClicked(object sender, EventArgs e)
         {
             Button btn = sender as Button;
 
@@ -432,10 +432,10 @@ namespace MinesweeperApp
                     while (Ycount < buttons.GetLength(1))
                     {
                         //remove active button's functions
-                        buttons[Xcount, Ycount].PreviewMouseLeftButtonDown -= mouseDown;
-                        buttons[Xcount,Ycount].PreviewMouseLeftButtonUp -= bombClicked;
-                        buttons[Xcount, Ycount].PreviewMouseLeftButtonUp -= mouseUp;
-                        buttons[Xcount, Ycount].MouseRightButtonDown -= flagPlaced;
+                        buttons[Xcount, Ycount].PreviewMouseLeftButtonDown -= MouseDown;
+                        buttons[Xcount,Ycount].PreviewMouseLeftButtonUp -= BombClicked;
+                        buttons[Xcount, Ycount].PreviewMouseLeftButtonUp -= MouseUp;
+                        buttons[Xcount, Ycount].MouseRightButtonDown -= FlagPlaced;
 
                         //if the bombs arent flagged, reveal them to the player! (And reveal their mistakes with an X)
                         if ((bombs.Any(bomb => bomb.X == Xcount && bomb.Y == Ycount)) && (btn != buttons[Xcount, Ycount]) && (buttons[Xcount, Ycount].Content != "🚩"))
@@ -465,7 +465,7 @@ namespace MinesweeperApp
         }
 
         //when a flag is placed (Right Click)
-        private void flagPlaced(object sender, EventArgs e)
+        private void FlagPlaced(object sender, EventArgs e)
         {
             Button btn = sender as Button;
 
@@ -490,13 +490,13 @@ namespace MinesweeperApp
 
 
         //When the reset button is clicked...
-        private void restartBtn_Click(object sender, RoutedEventArgs e)
+        private void RestartBtn_Click(object sender, RoutedEventArgs e)
         {
-            restartGame(buttons.GetLength(0), buttons.GetLength(1), bombs.Length);
+            RestartGame(buttons.GetLength(0), buttons.GetLength(1), bombs.Length);
         }
 
         //Reset the game!
-        public void restartGame(int width = 9, int height = 9, int mines = 10)
+        public void RestartGame(int width = 9, int height = 9, int mines = 10)
         {
             //UI tweaks and game setup
             faceState = 0;
@@ -505,11 +505,11 @@ namespace MinesweeperApp
             minefield.Children.Clear();
             minefield.RowDefinitions.Clear();
             minefield.ColumnDefinitions.Clear();
-            createGrid(width, height, mines);
+            CreateGrid(width, height, mines);
         }
 
         //Calculate adjacent mines...
-        int mineCalculator(int x, int y)
+        int MineCalculator(int x, int y)
         {
             int numBombs = 0;
 
@@ -561,7 +561,7 @@ namespace MinesweeperApp
         }
 
         //calculate what the current time is
-        void timerTicks(object sender, EventArgs e)
+        void TimerTicks(object sender, EventArgs e)
         {
             if (clock.IsRunning)
             {
@@ -580,7 +580,7 @@ namespace MinesweeperApp
         }
 
         //End the game
-        public void gameEnd()
+        public void GameEnd()
         {
             //stop the clock
             if (clock.IsRunning)
@@ -615,10 +615,10 @@ namespace MinesweeperApp
                 while (Ycount < buttons.GetLength(1))
                 {
                     //Remove button functions
-                    buttons[Xcount, Ycount].PreviewMouseLeftButtonDown -= mouseDown;
-                    buttons[Xcount, Ycount].PreviewMouseLeftButtonUp -= bombClicked;
-                    buttons[Xcount, Ycount].PreviewMouseLeftButtonUp -= mouseUp;
-                    buttons[Xcount, Ycount].MouseRightButtonDown -= flagPlaced;
+                    buttons[Xcount, Ycount].PreviewMouseLeftButtonDown -= MouseDown;
+                    buttons[Xcount, Ycount].PreviewMouseLeftButtonUp -= BombClicked;
+                    buttons[Xcount, Ycount].PreviewMouseLeftButtonUp -= MouseUp;
+                    buttons[Xcount, Ycount].MouseRightButtonDown -= FlagPlaced;
 
                     //If there are unflagged bombs remaining, flag them.
                     if ((bombs.Any(bomb => bomb.X == Xcount && bomb.Y == Ycount)) && (buttons[Xcount, Ycount].Content != "🚩"))
@@ -631,7 +631,7 @@ namespace MinesweeperApp
             }
         }
 
-        private void difficultyBtn_Click(object sender, RoutedEventArgs e)
+        private void DifficultyBtn_Click(object sender, RoutedEventArgs e)
         {
             //stop the clock
             if (clock.IsRunning)
