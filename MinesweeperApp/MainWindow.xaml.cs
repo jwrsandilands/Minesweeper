@@ -117,11 +117,11 @@ namespace MinesweeperApp
             //ITERATE THROUGH THE FIELD TO SET BUTTONS AND BOMBS
             //Along the corridor...
             buttons = new Button[xSize, ySize];
-            int Xcount = 0;
+            int Xcount = 0, Ycount;
             while (Xcount < buttons.GetLength(0))
             {
                 //Up the stairs...
-                int Ycount = 0;
+                Ycount = 0;
 
                 while (Ycount < buttons.GetLength(1))
                 {
@@ -277,6 +277,7 @@ namespace MinesweeperApp
 
                 faceState = 0;
                 btn.IsEnabled = false;
+
                 //only print a number if there are bombs nearby, otherwise blank the square
                 if (numBombs != 0) { btn.Content = numBombs; }
                 else { btn.Content = ""; }
@@ -287,12 +288,12 @@ namespace MinesweeperApp
             {
                 //Locate the activated button!
                 //Along the corridor...
-                int Xcount = 0;
+                int Xcount = 0,Ycount;
 
                 while (Xcount < buttons.GetLength(0))
                 {
                     //Up the stairs...
-                    int Ycount = 0;
+                    Ycount = 0;
 
                     while (Ycount < buttons.GetLength(1))
                     {
@@ -300,7 +301,7 @@ namespace MinesweeperApp
                         if (btn == buttons[Xcount, Ycount])
                         {
                             //If the button is not agaist the wall or a disabled button 
-                            //On true activate the tile of...
+                            //On true activate the tile to the...
                             //... NORTHWEST 
                             if ((btn != buttons[0, Ycount]) && (btn != buttons[Xcount, 0]) && (buttons[Xcount - 1, Ycount - 1].IsEnabled))
                             {
@@ -360,13 +361,13 @@ namespace MinesweeperApp
             //calculate victory
             bool theTruth;
             int truthCount = 0;
-            //along the corridor
-            int XcountAgain = 0;
 
+            //along the corridor
+            int XcountAgain = 0, YcountAgain;
             while (XcountAgain < buttons.GetLength(0))
             {
                 //Up the stairs...
-                int YcountAgain = 0;
+                YcountAgain = 0;
                 while (YcountAgain < buttons.GetLength(1))
                 {
                     //is the located button disabled?
@@ -421,12 +422,12 @@ namespace MinesweeperApp
 
                 //Locate and disable all buttons
                 //Along the corridor...
-                int Xcount = 0;
+                int Xcount = 0, Ycount;
 
                 while (Xcount < buttons.GetLength(0))
                 {
                     //Up the stairs...
-                    int Ycount = 0;
+                    Ycount = 0;
 
                     while (Ycount < buttons.GetLength(1))
                     {
@@ -456,6 +457,7 @@ namespace MinesweeperApp
 
                         Ycount++;
                     }
+
                     Xcount++;
                 }
             }
@@ -603,12 +605,12 @@ namespace MinesweeperApp
 
             //Locate and disable all buttons
             //Along the corridor...
-            int Xcount = 0;
+            int Xcount = 0, Ycount;
 
             while (Xcount < buttons.GetLength(0))
             {
                 //Up the stairs...
-                int Ycount = 0;
+                Ycount = 0;
 
                 while (Ycount < buttons.GetLength(1))
                 {
