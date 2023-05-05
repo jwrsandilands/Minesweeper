@@ -296,62 +296,56 @@ namespace MinesweeperApp
 
                     while (Ycount < buttons.GetLength(1))
                     {
-                        //if the button selected is found in the array
+                        //Match the button to its position in the array
                         if (btn == buttons[Xcount, Ycount])
                         {
-                            //If the button isnt agaist the wall or a disabled button (NORTHWEST)
+                            //If the button is not agaist the wall or a disabled button 
+                            //On true activate the tile of...
+                            //... NORTHWEST 
                             if ((btn != buttons[0, Ycount]) && (btn != buttons[Xcount, 0]) && (buttons[Xcount - 1, Ycount - 1].IsEnabled))
                             {
-                                //Activate the tile to the NorthWest
                                 tileActivated(buttons[Xcount - 1, Ycount - 1]);
                             }
 
-                            //If the button isnt agaist the wall or a disabled button (NORTH)
+                            //... NORTH
                             if ((btn != buttons[Xcount, 0]) && (buttons[Xcount, Ycount - 1].IsEnabled))
                             {
-                                //Activate the tile to the North
                                 tileActivated(buttons[Xcount, Ycount - 1]);
                             }
 
-                            //If the button isnt agaist the wall or a disabled button (NORTHEAST)
+                            //... NORTHEAST
                             if ((btn != buttons[Xcount, 0]) && (btn != buttons[buttons.GetLength(0) - 1, Ycount]) && (buttons[Xcount + 1, Ycount - 1].IsEnabled))
                             {
-                                //Activate the tile to the NorthEast
                                 tileActivated(buttons[Xcount + 1, Ycount - 1]);
                             }
 
-                            //If the button isnt agaist the wall or a disabled button (WEST)
+                            //... WEST
                             if ((btn != buttons[0, Ycount]) && (buttons[Xcount - 1, Ycount].IsEnabled))
                             {
-                                //Activate the tile to the West
                                 tileActivated(buttons[Xcount - 1, Ycount]);
                             }
 
-                            //If the button isnt agaist the wall or a disabled button (EAST)
+                            //... EAST
                             if ((btn != buttons[buttons.GetLength(0) - 1, Ycount]) && (buttons[Xcount + 1, Ycount].IsEnabled))
                             {
-                                //Activate the tile to the east
                                 tileActivated(buttons[Xcount + 1, Ycount]);
                             }
 
-                            //If the button isnt agaist the wall or a disabled button (SOUTHWEST)
+                            //... SOUTHWEST
                             if ((btn != buttons[Xcount, buttons.GetLength(1) - 1]) && (btn != buttons[0, Ycount]) && (buttons[Xcount - 1, Ycount + 1].IsEnabled))
                             {
-                                //activate the tile to the southwest
                                 tileActivated(buttons[Xcount - 1, Ycount + 1]);
                             }
 
-                            //If the button isnt agaist the wall or a disabled button (SOUTH)
+                            //... SOUTH
                             if ((btn != buttons[Xcount, buttons.GetLength(1) - 1]) && (buttons[Xcount, Ycount + 1].IsEnabled))
                             {
-                                //activate the tile to the south
                                 tileActivated(buttons[Xcount, Ycount + 1]);
                             }
 
-                            //If the button isnt agaist the wall or a disabled button (SOUTHEAST)
+                            //... SOUTHEAST 
                             if ((btn != buttons[Xcount, buttons.GetLength(1) - 1]) && (btn != buttons[buttons.GetLength(0) - 1, Ycount]) && (buttons[Xcount + 1, Ycount + 1].IsEnabled))
                             {
-                                //activate the tile to the southeast
                                 tileActivated(buttons[Xcount + 1, Ycount + 1]);
                             }
 
