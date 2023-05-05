@@ -122,7 +122,7 @@ namespace MinesweeperApp
                     if (gameBegun && !main.gameover)
                     {
                         main.clock.Start();
-                        main.dt.Start();
+                        main.timer.Start();
                     }
 
                     //re-enable the window
