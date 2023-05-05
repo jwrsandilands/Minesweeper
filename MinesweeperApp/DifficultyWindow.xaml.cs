@@ -64,8 +64,6 @@ namespace MinesweeperApp
                     }
                     else if(custBtn.IsChecked == true)
                     {
-
-
                         //Get the width (within reason!)
                         width = int.Parse(wTxt.Text);
                         if(width < 8) { width = 8; }
@@ -97,8 +95,7 @@ namespace MinesweeperApp
                     main.IsEnabled = true;
                 }
             }
-
-            this.Close();
+            Close();
         }
 
         //If this window is closed continue the game
@@ -107,7 +104,7 @@ namespace MinesweeperApp
             base.OnClosed(e);
 
             MainWindow main;
-            bool gameBegun = false;
+            bool gameBegun;
 
             foreach (Window window in Application.Current.Windows)
             {

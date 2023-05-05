@@ -170,7 +170,7 @@ namespace MinesweeperApp
         private void positionMines(int mines = 10, int XSize = 9, int YSize = 9)
         {
             //set bomb array size
-            bombs = new Bomb[mines];
+            bombs = new Bomb[0];
 
             //set number of flags
             flagCounter = mines;
@@ -193,7 +193,9 @@ namespace MinesweeperApp
                 }
 
                 //set bomb
+                Array.Resize(ref bombs, bombs.Length + 1);
                 bombs[mineCount] = newBomb;
+
                 mineCount++;
             }
         }
@@ -239,9 +241,12 @@ namespace MinesweeperApp
             int Y = (int)Math.Floor(location.Y / 24) - 3;
             int numBombs = mineCalculator(X, Y);
 
-            //Tell the player how many bombs are nearby
-            switch (numBombs)
+            //do not allow iterative unflagging or colour changing
+            if (btn.Content != "🚩")
             {
+                //Tell the player how many bombs are nearby
+                switch (numBombs)
+                {
                 case 0:
                     break;
                 case 1:
@@ -268,15 +273,13 @@ namespace MinesweeperApp
                 case 8:
                     btn.Foreground = Brushes.DarkSlateGray;
                     break;
-            }
+                }
 
-            //do not allow iterative unflagging
-            if (btn.Content != "🚩")
-            {
                 faceState = 0;
                 btn.IsEnabled = false;
-                //only print a number if there are bombs nearby
+                //only print a number if there are bombs nearby, otherwise blank the square
                 if (numBombs != 0) { btn.Content = numBombs; }
+                else { btn.Content = ""; }
             }
 
             //This tile has no nearby bombs. Reveal adjacent tiles
@@ -388,7 +391,6 @@ namespace MinesweeperApp
                 gameEnd();
             }
         }
-
 
         //You clicked a bomb!
         private void bombClicked(object sender, EventArgs e)
