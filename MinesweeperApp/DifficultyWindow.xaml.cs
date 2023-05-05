@@ -205,7 +205,7 @@ namespace MinesweeperApp
             else if (i < 1)
             {
                 //if the number is too small make it as big as it is required to be
-                if (i < (int.Parse(wTxt.Text) * 2) && int.Parse(hTxt.Text) * int.Parse(wTxt.Text) > 1200)
+                if ((i < (int.Parse(wTxt.Text) * 2)) && (int.Parse(hTxt.Text) * (int.Parse(wTxt.Text)) > 1200))
                 {
                     bTxt.Text = (int.Parse(wTxt.Text) * 2).ToString();
                 }
@@ -214,7 +214,7 @@ namespace MinesweeperApp
                     bTxt.Text = "1";
                 }
             }
-            else if (i > (int.Parse(hTxt.Text) * int.Parse(wTxt.Text)) - 1)
+            else if (i > int.Parse(hTxt.Text) * int.Parse(wTxt.Text) - 1)
             {
                 //if the number is too big make it the maximum value or cap it to 999
                 i = (int.Parse(hTxt.Text) * int.Parse(wTxt.Text) - 1);
@@ -228,7 +228,6 @@ namespace MinesweeperApp
                     bTxt.Text = i.ToString();
                 }
             }
-
         }
     }
 }

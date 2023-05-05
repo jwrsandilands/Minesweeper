@@ -300,56 +300,56 @@ namespace MinesweeperApp
                         if (btn == buttons[Xcount, Ycount])
                         {
                             //If the button isnt agaist the wall or a disabled button (NORTHWEST)
-                            if (btn != buttons[0, Ycount] && btn != buttons[Xcount, 0] && buttons[Xcount - 1, Ycount - 1].IsEnabled)
+                            if ((btn != buttons[0, Ycount]) && (btn != buttons[Xcount, 0]) && (buttons[Xcount - 1, Ycount - 1].IsEnabled))
                             {
                                 //Activate the tile to the NorthWest
                                 tileActivated(buttons[Xcount - 1, Ycount - 1]);
                             }
 
                             //If the button isnt agaist the wall or a disabled button (NORTH)
-                            if (btn != buttons[Xcount, 0] && buttons[Xcount, Ycount - 1].IsEnabled)
+                            if ((btn != buttons[Xcount, 0]) && (buttons[Xcount, Ycount - 1].IsEnabled))
                             {
                                 //Activate the tile to the North
                                 tileActivated(buttons[Xcount, Ycount - 1]);
                             }
 
                             //If the button isnt agaist the wall or a disabled button (NORTHEAST)
-                            if (btn != buttons[Xcount, 0] && btn != buttons[buttons.GetLength(0) - 1, Ycount] && buttons[Xcount + 1, Ycount - 1].IsEnabled)
+                            if ((btn != buttons[Xcount, 0]) && (btn != buttons[buttons.GetLength(0) - 1, Ycount]) && (buttons[Xcount + 1, Ycount - 1].IsEnabled))
                             {
                                 //Activate the tile to the NorthEast
                                 tileActivated(buttons[Xcount + 1, Ycount - 1]);
                             }
 
                             //If the button isnt agaist the wall or a disabled button (WEST)
-                            if (btn != buttons[0, Ycount] && buttons[Xcount - 1, Ycount].IsEnabled)
+                            if ((btn != buttons[0, Ycount]) && (buttons[Xcount - 1, Ycount].IsEnabled))
                             {
                                 //Activate the tile to the West
                                 tileActivated(buttons[Xcount - 1, Ycount]);
                             }
 
                             //If the button isnt agaist the wall or a disabled button (EAST)
-                            if (btn != buttons[buttons.GetLength(0) - 1, Ycount] && buttons[Xcount + 1, Ycount].IsEnabled)
+                            if ((btn != buttons[buttons.GetLength(0) - 1, Ycount]) && (buttons[Xcount + 1, Ycount].IsEnabled))
                             {
                                 //Activate the tile to the east
                                 tileActivated(buttons[Xcount + 1, Ycount]);
                             }
 
                             //If the button isnt agaist the wall or a disabled button (SOUTHWEST)
-                            if (btn != buttons[Xcount, buttons.GetLength(1) - 1] && btn != buttons[0, Ycount] && buttons[Xcount - 1, Ycount + 1].IsEnabled)
+                            if ((btn != buttons[Xcount, buttons.GetLength(1) - 1]) && (btn != buttons[0, Ycount]) && (buttons[Xcount - 1, Ycount + 1].IsEnabled))
                             {
                                 //activate the tile to the southwest
                                 tileActivated(buttons[Xcount - 1, Ycount + 1]);
                             }
 
                             //If the button isnt agaist the wall or a disabled button (SOUTH)
-                            if (btn != buttons[Xcount, buttons.GetLength(1) - 1] && buttons[Xcount, Ycount + 1].IsEnabled)
+                            if ((btn != buttons[Xcount, buttons.GetLength(1) - 1]) && (buttons[Xcount, Ycount + 1].IsEnabled))
                             {
                                 //activate the tile to the south
                                 tileActivated(buttons[Xcount, Ycount + 1]);
                             }
 
                             //If the button isnt agaist the wall or a disabled button (SOUTHEAST)
-                            if (btn != buttons[Xcount, buttons.GetLength(1) - 1] && btn != buttons[buttons.GetLength(0) - 1, Ycount] && buttons[Xcount + 1, Ycount + 1].IsEnabled)
+                            if ((btn != buttons[Xcount, buttons.GetLength(1) - 1]) && (btn != buttons[buttons.GetLength(0) - 1, Ycount]) && (buttons[Xcount + 1, Ycount + 1].IsEnabled))
                             {
                                 //activate the tile to the southeast
                                 tileActivated(buttons[Xcount + 1, Ycount + 1]);
@@ -443,7 +443,7 @@ namespace MinesweeperApp
                         buttons[Xcount, Ycount].MouseRightButtonDown -= flagPlaced;
 
                         //if the bombs arent flagged, reveal them to the player! (And reveal their mistakes with an X)
-                        if (bombs.Any(bomb => bomb.X == Xcount && bomb.Y == Ycount) && btn != buttons[Xcount, Ycount] && buttons[Xcount, Ycount].Content != "🚩")
+                        if ((bombs.Any(bomb => bomb.X == Xcount && bomb.Y == Ycount)) && (btn != buttons[Xcount, Ycount]) && (buttons[Xcount, Ycount].Content != "🚩"))
                         {
                             buttons[Xcount, Ycount].FontSize = 20;
                             buttons[Xcount, Ycount].FontWeight = FontWeights.Bold;
@@ -451,7 +451,7 @@ namespace MinesweeperApp
                             buttons[Xcount, Ycount].Foreground = Brushes.Black;
                             buttons[Xcount, Ycount].IsEnabled = false;
                         }
-                        else if(!bombs.Any(bomb => bomb.X == Xcount && bomb.Y == Ycount) && btn != buttons[Xcount, Ycount] && buttons[Xcount, Ycount].Content == "🚩")
+                        else if((!bombs.Any(bomb => bomb.X == Xcount && bomb.Y == Ycount)) && (btn != buttons[Xcount, Ycount]) && (buttons[Xcount, Ycount].Content == "🚩"))
                         {
                             buttons[Xcount, Ycount].FontSize = 16;
                             buttons[Xcount, Ycount].FontWeight = FontWeights.Bold;
@@ -474,7 +474,7 @@ namespace MinesweeperApp
             Button btn = sender as Button;
 
             //check if this button can be flagged, or should be quiried
-            if (btn.Content != "🚩" && btn.Content != "?" && flagCounter != 0)
+            if ((btn.Content != "🚩") && (btn.Content != "?" && flagCounter != 0))
             {
                 btn.Content = "🚩";
                 flagCounter--;
@@ -625,7 +625,7 @@ namespace MinesweeperApp
                     buttons[Xcount, Ycount].MouseRightButtonDown -= flagPlaced;
 
                     //If there are unflagged bombs remaining, flag them.
-                    if (bombs.Any(bomb => bomb.X == Xcount && bomb.Y == Ycount) && buttons[Xcount, Ycount].Content != "🚩")
+                    if ((bombs.Any(bomb => bomb.X == Xcount && bomb.Y == Ycount)) && (buttons[Xcount, Ycount].Content != "🚩"))
                     {
                         buttons[Xcount, Ycount].Content = "🚩";
                     }
@@ -647,15 +647,15 @@ namespace MinesweeperApp
             DifficultyWindow diff = new DifficultyWindow();
 
             //get the difficulty to display
-            if(buttons.GetLength(0) == 9 && buttons.GetLength(1) == 9 && bombs.Length == 10)
+            if((buttons.GetLength(0) == 9) && (buttons.GetLength(1) == 9) && (bombs.Length == 10))
             {
                 diff.easyBtn.IsChecked = true;
             }
-            else if(buttons.GetLength(0) == 16 && buttons.GetLength(1) == 16 && bombs.Length == 40)
+            else if((buttons.GetLength(0) == 16) && (buttons.GetLength(1) == 16) && (bombs.Length == 40))
             {
                 diff.normBtn.IsChecked = true;
             }
-            else if (buttons.GetLength(0) == 30 && buttons.GetLength(1) == 16 && bombs.Length == 99)
+            else if ((buttons.GetLength(0) == 30) && (buttons.GetLength(1) == 16) && (bombs.Length == 99))
             {
                 diff.hardBtn.IsChecked = true;
             }
